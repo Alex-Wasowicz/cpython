@@ -306,24 +306,25 @@ Sequences
 These represent finite ordered sets indexed by non-negative numbers. The
 built-in function :func:`len` returns the number of items of a sequence. When
 the length of a sequence is *n*, the index set contains the numbers 0, 1,
-..., *n*-1.  Item *i* of sequence *a* is selected by ``a[i]``. Some sequences,
+..., *n*-1.  Item *i* of sequence *a* is selected by ``a[i]``. Most sequences,
 including built-in sequences, interpret negative subscripts by adding the
-sequence length. For example, ``a[-2]`` equals ``a[n-2]``, the second to last
-item of sequence a with length ``n``.
+sequence length (once). For example, ``a[-1]`` equals ``a[n-1]``, the last
+item. Like ``a[n]`` doesn't exist, ``a[-n-1]`` also doesn't exist.
 
 .. index:: single: slicing
 
-Sequences also support slicing: ``a[i:j]`` selects all items with index *k* such
-that *i* ``<=`` *k* ``<`` *j*.  When used as an expression, a slice is a
-sequence of the same type. The comment above about negative indexes also applies
-to negative slice positions.
+Sequences also support slicing: ``a[e:f]`` selects all items starting with *e*
+and ending with one before *f*. Such that *e* ``<=`` *i* ``<`` *f*, for *e* and
+*f* after normaization (for negative values ``len(a)`` is added one).
+When used as an expression, a slice is a sequence of the same type.
 
-Some sequences also support "extended slicing" with a third "step" parameter:
-``a[i:j:k]`` selects all items of *a* with index *x* where ``x = i + n*k``, *n*
-``>=`` ``0`` and *i* ``<=`` *x* ``<`` *j*.
+Sequences also support slicing with a third "step" parameter: ``a[e:f:h]``
+selects all items starting with *e* and steping by *h* until reaching *f*
+(excluding *f* element). For example, ``a[8:0:-2]`` selects elements:
+``a[8]``, ``a[6]``, ``a[4]``, and ``a[2]`` (in that order).
 
-Sequences are distinguished according to their mutability:
-
+Slicing parameters can be omitted: ``a[:f]`` is not start bouded, and
+``a[e:]`` is not stop bounded. For example, ``a[:]`` equals `a`
 
 Immutable sequences
 ^^^^^^^^^^^^^^^^^^^
