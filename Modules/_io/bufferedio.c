@@ -9,6 +9,7 @@
 
 #include "Python.h"
 #include "pycore_call.h"                // _PyObject_CallNoArgs()
+#include "pycore_fileutils.h"           // _PyFile_Flush
 #include "pycore_object.h"              // _PyObject_GC_UNTRACK()
 #include "pycore_pyerrors.h"            // _Py_FatalErrorFormat()
 #include "pycore_pylifecycle.h"         // _Py_IsInterpreterFinalizing()
@@ -1523,8 +1524,9 @@ buffered_iternext(PyObject *op)
 }
 
 static PyObject *
-buffered_repr(buffered *self)
+buffered_repr(PyObject *op)
 {
+    buffered *self = buffered_CAST(op);
     PyObject *nameobj, *res;
 
     if (PyObject_GetOptionalAttr((PyObject *) self, &_Py_ID(name), &nameobj) < 0) {
@@ -2553,8 +2555,7 @@ static PyMethodDef bufferedreader_methods[] = {
     _IO__BUFFERED_TRUNCATE_METHODDEF
     _IO__BUFFERED___SIZEOF___METHODDEF
 
-    {"__reduce__", _PyIOBase_cannot_pickle, METH_NOARGS},
-    {"__reduce_ex__", _PyIOBase_cannot_pickle, METH_O},
+    {"__getstate__", _PyIOBase_cannot_pickle, METH_NOARGS},
     {NULL, NULL}
 };
 
@@ -2613,8 +2614,7 @@ static PyMethodDef bufferedwriter_methods[] = {
     _IO__BUFFERED_TELL_METHODDEF
     _IO__BUFFERED___SIZEOF___METHODDEF
 
-    {"__reduce__", _PyIOBase_cannot_pickle, METH_NOARGS},
-    {"__reduce_ex__", _PyIOBase_cannot_pickle, METH_O},
+    {"__getstate__", _PyIOBase_cannot_pickle, METH_NOARGS},
     {NULL, NULL}
 };
 
@@ -2731,8 +2731,7 @@ static PyMethodDef bufferedrandom_methods[] = {
     _IO_BUFFEREDWRITER_WRITE_METHODDEF
     _IO__BUFFERED___SIZEOF___METHODDEF
 
-    {"__reduce__", _PyIOBase_cannot_pickle, METH_NOARGS},
-    {"__reduce_ex__", _PyIOBase_cannot_pickle, METH_O},
+    {"__getstate__", _PyIOBase_cannot_pickle, METH_NOARGS},
     {NULL, NULL}
 };
 
