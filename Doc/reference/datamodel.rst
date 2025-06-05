@@ -315,15 +315,15 @@ but ``a[-n-1]`` doesn't exist, since item -1 doesn't exist.
 
 Sequences also support slicing: ``a[e:f]`` selects all items starting with *e*
 and ending with one before *f*. Such that *e* ``<=`` *i* ``<`` *f*, for *e* and
-*f* after normaization (for negative values ``len(a)`` is added once).
+*f* after normalization (for negative values ``len(a)`` is added once).
 When used as an expression, a slice is a sequence of the same type.
 
 Sequences also support slicing with a third "step" parameter: ``a[e:f:h]``
-selects all items starting with *e* and steping by *h* until reaching *f*
-(excluding *f* element). For example, ``a[8:0:-2]`` selects items:
+selects all items starting with *e* and stepping by *h* until reaching *f*
+(excluding *f* item). For example, ``a[8:0:-2]`` selects items:
 ``a[8]``, ``a[6]``, ``a[4]``, and ``a[2]`` (in that order).
 
-Slicing parameters can be omitted: ``a[:f]`` is not start bouded, and
+Slicing parameters can be omitted: ``a[:f]`` is not start bounded, and
 ``a[e:]`` is not stop bounded. ``a[:]`` selects the entire `a`.
 
 Immutable sequences
